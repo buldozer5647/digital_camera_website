@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container justify-center items-center h-screen mx-auto">
+    {% if user.is_authenticated %}
+        <h1 class="mt-10 text-center text-7xl">Hello <span class="" style="color: {{ color }};">{{ user.username }}</span>!</h1>
+    {% else %}
+        <h1 class="mx-10 text-center text-7xl">Hello unknow!</h1>
+    {% endif %}
+</div>
+
+{% endblock content %}
