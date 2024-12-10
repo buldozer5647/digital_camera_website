@@ -118,6 +118,9 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_VERIFICATION = "mandatory"
 ACCOUNT_CONFIRM_EMAIL_ON_GET = True
 
+LOGIN_REDIRECT_URL = "homepage"
+LOGOUT_REDIRECT_URL = "homepage"
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

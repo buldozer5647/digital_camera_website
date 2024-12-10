@@ -2,12 +2,61 @@
 
 {% block content %}
 
-<div class="container justify-center items-center h-screen mx-auto">
+<div class="container flex flex-col justify-center items-center  mx-auto">
     {% if user.is_authenticated %}
         <h1 class="mt-10 text-center text-7xl">Hello <span class="" style="color: {{ color }};">{{ user.username }}</span>!</h1>
-    {% else %}
-        <h1 class="mx-10 text-center text-7xl">Hello unknow!</h1>
+        <div class="mt-1 flex">
+            <button onclick="openFullScreen()" class="mr-1 bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none active:bg-green-500">Add photo</button>
+            <form action="{% url 'account_logout' %}">
+                <button type="submit" class="ml-1 bg-gray-700 text-white py-2 px-4 rounded-md hover:bg-gray-600 focus:outline-none active:bg-gray-500">Logout</button>
+            </form>
+        </div>
+        {% else %}
+        <h1 class="mx-10 text-center text-7xl">Hello!</h1>
+        <form action="{% url 'account_login' %}">
+            <button type="submit" class="bg-green-700 text-white py-2 px-4 rounded-md hover:bg-green-600 focus:outline-none active:bg-green-500">Login</button>
+        </form>
     {% endif %}
+
+    {% for im_obj in images_objects %}
+    <div class="my-4">
+
+        <div class="max-w-96 max-h-96 bg-gray-700 mx-auto">
+            <a href="{{ im_obj.image.url }}" target="_blank"><img class="w-full h-full object-cover" src="{{ im_obj.image.url }}" alt="{{ im_obj.alt_text }}"></a>
+        </div>
+        <div class="w-full max-w-7xl w-full sm:w-1/2 md:w-2/3 lg:w-3/4 mx-auto">
+            <p class="">"{{ im_obj.title }}" by @{{ im_obj.user.username }}</p>
+            <p class="">{{ im_obj.date }}</p>
+            <p class="">{{ im_obj.description }}</p>
+        </div>
+    </div>
+    {% endfor %}
+
+    <div id="form-container" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden" onclick="closeFullScreen(event)">
+        <div class="bg-white w-full max-w-md p-8 rounded-lg">
+            <h2 class="text-2xl font-semibold mb-4 text-center">Please fill out the form</h2>
+
+            <form method="post" class="photo-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 w-full mt-4">
+                    Submit
+                </button>
+            </form>
+        </div>
+    </div>
 </div>
+
+<script>
+    function openFullScreen() {
+        document.getElementById('form-container').classList.remove('hidden');
+    }
+
+    function closeFullScreen(event) {
+        if (event.target === document.getElementById('form-container')) {
+            document.getElementById('form-container').classList.add('hidden');
+        }
+    }
+</script>
 
 {% endblock content %}

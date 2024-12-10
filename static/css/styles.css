@@ -3,3 +3,14 @@
     padding: 0;
     margin: 0;
 }
+
+input, textarea {
+    border: 1px solid black;
+    border-radius: 5px;
+    background-color: rgb(213, 213, 213, 0.2);
+    
+}
+
+.photo-form p {
+    margin-top: 10px;
+}
